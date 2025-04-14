@@ -13,7 +13,7 @@ struct Student {
 		: id(_id), name(_name), midScore(_midScore), finalScore(_finalScore) {}
 
 	float totalScore() const {
-		return (midScore + finalScore) / 2;
+		return (float)(midScore + finalScore) / 2;
 	}
 
 	friend ostream& operator << (ostream& os, const Student& s) {
@@ -22,13 +22,6 @@ struct Student {
 	}
 };
 
-void print(const vector<Student>& v) {
-	for (const auto& s : v) {
-		cout << s << " ";
-	}
-	cout << endl;
-
-}
 
 int main(void) {
 	vector<Student> students;
@@ -141,7 +134,6 @@ int main(void) {
 
 			cout << endl;
 
-
 		} break;
 
 		case 8: {
@@ -158,13 +150,17 @@ int main(void) {
 		
 		}
 
-		
+		if (students.empty()) {
+			cout << "No students in the list";
+		}
 
-		
+		else {
+			for (const auto& s : students) {
+				cout << s << " ";
+			}
+		}
 
-
-		print(students);
-
+		cout << endl;
 
 	}
 }
