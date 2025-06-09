@@ -45,7 +45,7 @@ int calcPostfix(istream& is) {
 	}
 	if (st.empty()) throw string("wrong equation");
 	if (st.size() > 1) throw string("missing operation");
-	if (st.size() == 1) return st.top();
+	return st.top();
 }
 
 
