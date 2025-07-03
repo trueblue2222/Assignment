@@ -13,7 +13,7 @@
 3. In-order formula
    - prefix 표현의 수식을 우리가 평상시 쓰고 있는 수식인 In-order 표현으로 바꿔 출력하기(예: - + 3 3 * 2 + 2 1 3 => 3 * 3 + 2 * ( 2 + 1 ) - 3 = 12)
    - dynamic_cast를 이용하여 노드의 부모를 알아내 알맞은 상황에서 괄호를 열고 닫아주기
-   - method overriding을 통해 상황에 맞는 숫자나 연산부호 출력하기
+   - function overriding을 통해 상황에 맞는 숫자나 연산부호 출력하기
 
 4. Post-order Calculator
    - postfix 표현의 수식을 입력받아 계산 결과 출력하기
