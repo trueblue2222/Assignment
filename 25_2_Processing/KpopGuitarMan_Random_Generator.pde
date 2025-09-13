@@ -7,15 +7,15 @@ public class KpopGuitarMan {
 
     int position_x;
     int position_y;
-    int size;
+    int hair_size;
 
     color clothes_color;
     color pants_color;
     color guitar_color;
 
     public KpopGuitarMan() {
-        position_x = (int)random(0, width-300);
-        position_y = (int)random(0, height-300);
+        position_x = (int)random(-300, width-300);
+        position_y = (int)random(-300, height-300);
         clothes_color = color(random(0, 256), random(0, 256), random(0, 256));
         pants_color = color(random(0, 256), random(0, 256), random(0, 256));
         guitar_color = color(random(0, 256), random(0, 256), random(0, 256));
