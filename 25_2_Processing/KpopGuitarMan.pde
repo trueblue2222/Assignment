@@ -51,13 +51,13 @@ void drawMouth() {
   pushStyle();
   strokeWeight(3);
   stroke(#ffc0cb);
-  popStyle();
 
   // drawing the mouth. The color of mouth is dark red.
   // the part that is inside the mouth has little transparency.
   fill(#861938, 180);
   bezier(400, 190, 450, 170, 450, 200, 400, 210);
   bezier(400, 190, 350, 170, 350, 200, 400, 210);
+  popStyle();
 }
 
 // A function of drawing hair.
@@ -101,13 +101,15 @@ void drawBody() {
   drawLegs();
 }
 
+// A function of drawing left arm.
 void drawLeftArm() {
   // drawing right arm first because it frets the chords.
   noStroke();
   fill(#FFE5B4);
-  quad(348, 250, 348, 290, 270, 410, 232, 410);
+  quad(350, 250, 350, 290, 270, 410, 232, 410);
 }
 
+// A function of drawing guitar.
 void drawGuitar() {
   // drawing frets.
   stroke(0);
@@ -165,6 +167,7 @@ void drawGuitar() {
   }
 }
 
+// A function of drawing left hand.
 void drawLeftHand() {
   fill(#FFE5B4);
   stroke(#FFE5B4);
@@ -178,11 +181,12 @@ void drawLeftHand() {
   arc(236, 440, 25, 25, 0, PI);
 }
 
+// A function of drawing right arm and right hand.
 void drawRightArm_Hand() {
   // drawing right arm.
   noStroke();
   fill(#FFE5B4);
-  quad(453, 252, 453, 290, 540, 330, 575, 330);
+  quad(450, 252, 450, 290, 540, 330, 575, 330);
   quad(540, 330, 575, 330, 560, 400, 534, 396);
 
   // drawing right hand.
@@ -194,7 +198,9 @@ void drawRightArm_Hand() {
   ellipse(558, 409, 5, 13);
 }
 
+// A funtion of drawing legs.
 void drawLegs() {
+  // drawing legs.
   noStroke();
   fill(#9CBCFF);
 
@@ -208,20 +214,28 @@ void drawLegs() {
   vertex(450, 450);
   endShape(CLOSE);
 
+  // drawing sneakers.
   pushStyle();
-  strokeWeight(2);
-  stroke(#020715);
-  fill(255);
-  bezier(300, 650, 270, 650, 270, 670, 300, 670);
+
+  fill(#7B1113);
+  stroke(#654321);      
+  strokeWeight(3);
   
-  line(300, 670, 350, 670);
-  line(350, 670, 350, 650);
-  line(350, 650, 300, 650);
+  beginShape();
+  vertex(300, 650);                             
+  bezierVertex(270, 650, 270, 670, 300, 670);    
+  vertex(350, 670);                              
+  vertex(350, 650);                              
+  endShape(CLOSE);                               
   
-  bezier(500, 650, 530, 650, 530, 670, 500, 670);
-  line(500, 670, 450, 670);
-  line(450, 670, 450, 650);
-  line(450, 650, 500, 650);
+  beginShape();
+  vertex(500, 650);                              
+  vertex(450, 650);                              
+  vertex(450, 670);                              
+  vertex(500, 670);                              
+  bezierVertex(530, 670, 530, 650, 500, 650);    
+  endShape();
+
   popStyle();
 }
 

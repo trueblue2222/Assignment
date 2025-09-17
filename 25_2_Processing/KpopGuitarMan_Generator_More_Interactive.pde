@@ -4,36 +4,54 @@ public class KpopGuitarMan {
     int position_y;
     int mouth_size;
 
+    // manage random variables of color.
     color clothes_color;
     color pants_color;
     color guitar_color;
     color hair_color;
 
     public KpopGuitarMan() {
-        position_x = (int)random(-200, width-400);
+        position_x = (int)random(-250, width-400);
         position_y = (int)random(-50, height-630);
         clothes_color = color(random(0, 256), random(0, 256), random(0, 256));
+        clothes_color_copy = clothes_color;
         pants_color = color(random(0, 256), random(0, 256), random(0, 256));
+        pants_color_copy = pants_color;
         guitar_color = color(random(0, 256), random(0, 256), random(0, 256));
+        guitar_color_copy = guitar_color;
+        hair_color = color(random(0, 256), random(0, 256), random(0, 256));
+        hair_color_copy = hair_color;
         mouth_size = (int)random(-5, 200);
+        mouth_size_copy = mouth_size;
     }
     
-    // not random for using mouseButton. using variables initial values of task 1.
+    // not to make guitarman randomly for using mouseButton to teleport. 
+    // using the most previous values of color of guitarman.
     public KpopGuitarMan(boolean b) {
         if(b) {
             position_x = 0;
             position_y = 0;
-            clothes_color = #000080;
-            pants_color = #9CBCFF;
-            guitar_color = #212121;
-            hair_color = #FFD400;
+            clothes_color = clothes_color_copy;
+            pants_color = pants_color_copy;
+            guitar_color = guitar_color_copy;
+            hair_color = hair_color_copy;
+            mouth_size = mouth_size_copy;
         }
     }
 
+    // using mouse point for rotate guitarman.
     public void drawKpopGuitarMan() {
         pushMatrix();
         
-        translate(position_x, position_y);
+        translate(position_x + 400, position_y + 300);
+        
+        float centerX = position_x + 400;
+        float centerY = position_y + 300;
+        float angle = atan2(mouseY - centerY, mouseX - centerX);
+        rotate(angle);
+        
+        translate(-400, -300);
+        
         drawHead();
         drawBody();
 
@@ -102,6 +120,7 @@ public class KpopGuitarMan {
         popStyle();
     }
 
+    // A function of drawing neck.
     private void drawNeck() {
         // drawing neck.
         stroke(#FFE5B4);
@@ -121,9 +140,9 @@ public class KpopGuitarMan {
         triangle(460, 40, 420, 80, 445, 97);
 
         // making hair naturally to fit the shape of head.
-        stroke(hair_color);
-        fill(hair_color);
-        bezier(355, 100, 355, 85, 445, 85, 445, 100);
+        stroke(#FFE5B4);
+        fill(#FFE5B4);
+        bezier(356, 102, 356, 85, 444, 85, 444, 102);
     }
 
     // A function that is responsible for the overall part of the body.
@@ -145,6 +164,7 @@ public class KpopGuitarMan {
         drawLegs();
     }
 
+    // A function of drawing left arm.
     private void drawLeftArm() {
         // drawing right arm first because it frets the chords.
         noStroke();
@@ -152,6 +172,7 @@ public class KpopGuitarMan {
         quad(350, 250, 350, 290, 270, 410, 232, 410);
     }
 
+    // A function of drawing guitar. the color of all parts of guitar is random.
     private void drawGuitar() {
         // drawing frets.
         stroke(0);
@@ -239,8 +260,10 @@ public class KpopGuitarMan {
     }
 
     private void drawLegs() {
+        // drawing legs.
+        pushStyle();
         noStroke();
-        fill(pants_color);
+        fill(#9CBCFF);
 
         beginShape();
         vertex(350, 450);
@@ -252,28 +275,43 @@ public class KpopGuitarMan {
         vertex(450, 450);
         endShape(CLOSE);
 
-        pushStyle();
-        strokeWeight(2);
-        stroke(#020715);
-        fill(255);
-        bezier(300, 650, 270, 650, 270, 670, 300, 670);
+        // drawing sneakers.
+        fill(#7B1113);
+        stroke(#654321);      
+        strokeWeight(3);
         
-        line(300, 670, 350, 670);
-        line(350, 670, 350, 650);
-        line(350, 650, 300, 650);
+        beginShape();
+        vertex(300, 650);                             
+        bezierVertex(270, 650, 270, 670, 300, 670);    
+        vertex(350, 670);                              
+        vertex(350, 650);                              
+        endShape(CLOSE);                               
         
-        bezier(500, 650, 530, 650, 530, 670, 500, 670);
-        line(500, 670, 450, 670);
-        line(450, 670, 450, 650);
-        line(450, 650, 500, 650);
+        beginShape();
+        vertex(500, 650);                              
+        vertex(450, 650);                              
+        vertex(450, 670);                              
+        vertex(500, 670);                              
+        bezierVertex(530, 670, 530, 650, 500, 650);    
+        endShape();
+
         popStyle();
     }
 
 }
 
 KpopGuitarMan guitarMan = null;
-int ePressed = 0;
 
+// store the number how much button 'e' is pressed.
+int ePressed = 0; 
+
+// store the most previous values of guitarman`s color.
+color clothes_color_copy;
+color pants_color_copy;
+color guitar_color_copy;
+color hair_color_copy;
+color mouth_size_copy;
+    
 void setup() {
     size(1000, 700);
     background(50);
@@ -283,6 +321,13 @@ void draw() {
     background(50);
     if(guitarMan != null) {
         guitarMan.drawKpopGuitarMan();
+        
+        // If button 'e' is pressed when guitarman is not null, 
+        // the variable ePressed`s value will be odd number.
+        if(ePressed % 2 == 1) {
+            // using millis() function to make the color of guitarman`s hair changable by time.
+            guitarMan.hair_color = color(millis() % 256, (millis() + 100) % 256, (millis() + 200) % 256);
+        }
     }
 }
 
@@ -295,15 +340,15 @@ void keyPressed() {
         guitarMan = null;
     }
 
-    if(key == 'e' || key == 'E') {
+    if(guitarMan != null && (key == 'e' || key == 'E')) {
         ePressed++;
     }
 }
 
 void mousePressed() {
-    guitarMan = new KpopGuitarMan(true);
     if(guitarMan != null && mouseButton == LEFT) {
+        guitarMan = new KpopGuitarMan(true);
         guitarMan.position_x = mouseX - 400;
-        guitarMan.position_y = mouseY - 150;
+        guitarMan.position_y = mouseY - 300;
     }
 }

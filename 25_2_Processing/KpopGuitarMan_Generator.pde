@@ -4,16 +4,19 @@ public class KpopGuitarMan {
     int position_y;
     int mouth_size;
 
+    // manage random variables of color.
     color clothes_color;
     color pants_color;
     color guitar_color;
+    color hair_color;
 
     public KpopGuitarMan() {
-        position_x = (int)random(-200, width-400);
+        position_x = (int)random(-250, width-400);
         position_y = (int)random(-50, height-630);
         clothes_color = color(random(0, 256), random(0, 256), random(0, 256));
         pants_color = color(random(0, 256), random(0, 256), random(0, 256));
         guitar_color = color(random(0, 256), random(0, 256), random(0, 256));
+        hair_color = color(random(0, 256), random(0, 256), random(0, 256));
         mouth_size = (int)random(-5, 200);
     }
 
@@ -71,8 +74,6 @@ public class KpopGuitarMan {
         ellipse(403, 168, 5, 5);
     }
 
-    
-
     // A function of drawing a mouth.
     private void drawMouth() {
         // drawing stoke as lips. The color of lips is pink.
@@ -80,15 +81,17 @@ public class KpopGuitarMan {
         strokeWeight(3);
         stroke(#ffc0cb);
         
-
         // drawing the mouth. The color of mouth is dark red.
         // the part that is inside the mouth has little transparency.
         fill(#861938, 180);
+
+        // I made the size of mouth randomly so it can looks like singing.
         bezier(400, 190 - 0.2 * mouth_size, 450 + mouth_size, 170 - 0.2 * mouth_size, 450 + mouth_size, 200 + 0.2 * mouth_size, 400, 210 + 0.2 * mouth_size);
         bezier(400, 190 - 0.2 * mouth_size, 350 - mouth_size, 170 - 0.2 * mouth_size, 350 - mouth_size, 200 + 0.2 * mouth_size, 400, 210 + 0.2 * mouth_size);
         popStyle();
     }
 
+    // A function of drawing neck.
     private void drawNeck() {
         // drawing neck.
         stroke(#FFE5B4);
@@ -98,9 +101,9 @@ public class KpopGuitarMan {
 
     // A function of drawing hair.
     private void drawHair() {
-        // the color of hair is yellow.
-        stroke(#FFD400);
-        fill(#FFD400);
+        // the color of hair is random.
+        stroke(hair_color);
+        fill(hair_color);
 
         bezier(355, 100, 355, 70, 445, 70, 445, 100);
         triangle(380, 80, 400, 30, 420, 80);
@@ -110,12 +113,12 @@ public class KpopGuitarMan {
         // making hair naturally to fit the shape of head.
         stroke(#FFE5B4);
         fill(#FFE5B4);
-        bezier(355, 100, 355, 85, 445, 85, 445, 100);
+        bezier(356, 100, 356, 85, 444, 85, 444, 100);
     }
 
     // A function that is responsible for the overall part of the body.
     private void drawBody() {
-        // drawing torso.
+        // drawing torso. the color of torso is random.
         noStroke();
         fill(clothes_color);
         rect(350, 250, 100, 200);
@@ -132,6 +135,7 @@ public class KpopGuitarMan {
         drawLegs();
     }
 
+    // A function of drawing left arm.
     private void drawLeftArm() {
         // drawing right arm first because it frets the chords.
         noStroke();
@@ -139,6 +143,7 @@ public class KpopGuitarMan {
         quad(350, 250, 350, 290, 270, 410, 232, 410);
     }
 
+    // A function of drawing guitar. the color of all parts of guitar is random.
     private void drawGuitar() {
         // drawing frets.
         stroke(0);
@@ -196,6 +201,7 @@ public class KpopGuitarMan {
         }
     }
 
+    // A function of drawing left hand.
     private void drawLeftHand() {
         fill(#FFE5B4);
         stroke(#FFE5B4);
@@ -209,6 +215,7 @@ public class KpopGuitarMan {
         arc(236, 440, 25, 25, 0, PI);
     }
 
+    // A function fo drawing right arm and right hand.
     private void drawRightArm_Hand() {
         // drawing right arm.
         noStroke();
@@ -225,9 +232,12 @@ public class KpopGuitarMan {
         ellipse(558, 409, 5, 13);
     }
 
+    // A function of drawing legs.
     private void drawLegs() {
+        // drawing legs.
+        pushStyle();
         noStroke();
-        fill(pants_color);
+        fill(#9CBCFF);
 
         beginShape();
         vertex(350, 450);
@@ -239,23 +249,28 @@ public class KpopGuitarMan {
         vertex(450, 450);
         endShape(CLOSE);
 
-        pushStyle();
-        strokeWeight(2);
-        stroke(#020715);
-        fill(255);
-        bezier(300, 650, 270, 650, 270, 670, 300, 670);
+        // drawing sneakers.
+        fill(#7B1113);
+        stroke(#654321);      
+        strokeWeight(3);
         
-        line(300, 670, 350, 670);
-        line(350, 670, 350, 650);
-        line(350, 650, 300, 650);
+        beginShape();
+        vertex(300, 650);                             
+        bezierVertex(270, 650, 270, 670, 300, 670);    
+        vertex(350, 670);                              
+        vertex(350, 650);                              
+        endShape(CLOSE);                               
         
-        bezier(500, 650, 530, 650, 530, 670, 500, 670);
-        line(500, 670, 450, 670);
-        line(450, 670, 450, 650);
-        line(450, 650, 500, 650);
+        beginShape();
+        vertex(500, 650);                              
+        vertex(450, 650);                              
+        vertex(450, 670);                              
+        vertex(500, 670);                              
+        bezierVertex(530, 670, 530, 650, 500, 650);    
+        endShape();
+
         popStyle();
     }
-
 }
 
 KpopGuitarMan guitarMan = null;
